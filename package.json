@@ -1,0 +1,22 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "This is project for personal blog",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1lsang/blog.git"
+  },
+  "keywords": [
+    "blog"
+  ],
+  "author": "1lsang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/1lsang/blog/issues"
+  },
+  "homepage": "https://1lsang.life"
+}
