@@ -4,7 +4,9 @@
   "description": "This is project for personal blog",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "eslint": "eslint '**/*.{js,jsx,ts,tsx}'",
     "eslint:fix": "eslint '**/*.{js,jsx,ts,tsx}' --fix",
     "prettier": "prettier '**/*.{js,jsx,ts,tsx,md}' --check",
