@@ -8,7 +8,9 @@
     "eslint": "eslint '**/*.{js,jsx,ts,tsx}'",
     "eslint:fix": "eslint '**/*.{js,jsx,ts,tsx}' --fix",
     "prettier": "prettier '**/*.{js,jsx,ts,tsx,md}' --check",
-    "prettier:fix": "prettier '**/*.{js,jsx,ts,tsx,md}' --write"
+    "prettier:fix": "prettier '**/*.{js,jsx,ts,tsx,md}' --write",
+    "prepare": "husky install",
+    "pre-commit": "lint-staged"
   },
   "repository": {
     "type": "git",
