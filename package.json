@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "eslint": "eslint '**/*.{js,jsx,ts,tsx}'",
+    "eslint:fix": "eslint '**/*.{js,jsx,ts,tsx}' --fix",
     "prettier": "prettier '**/*.{js,jsx,ts,tsx,md}' --check",
     "prettier:fix": "prettier '**/*.{js,jsx,ts,tsx,md}' --write"
   },
