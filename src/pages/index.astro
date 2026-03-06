@@ -2,23 +2,15 @@
 import BaseLayout from '../layouts/BaseLayout.astro'
 import { getCollection } from 'astro:content'
 import galleryMeta from '../../content/personal/gallery/metadata.json'
-import projects from '../../content/works/projects.json'
 
 const essays = (await getCollection('essay'))
   .filter(e => !e.data.draft)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
   .slice(0, 3)
 
-const techPosts = (await getCollection('tech'))
-  .filter(t => !t.data.draft)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0, 2)
-
 const galleryPreview = [...galleryMeta.items]
   .sort((a, b) => a.order - b.order)
   .slice(0, 4)
-
-const featuredWorks = projects.items.filter(p => p.featured).slice(0, 2)
 
 const formatDate = (date: Date) =>
   new Intl.DateTimeFormat('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' }).format(date)
@@ -78,59 +70,22 @@ const formatDate = (date: Date) =>
     </div>
   </section>
 
-  <!-- Featured Works -->
+  <!-- Tech Blog CTA -->
   <section class="section container">
-    <header class="section-header">
-      <h2 class="section-title">작업물</h2>
-      <a href="/works" class="section-more">전체 보기 →</a>
-    </header>
-    <ul class="works-list">
-      {featuredWorks.map(project => (
-        <li class="work-item">
-          <div class="work-inner">
-            <div class="work-info">
-              <h3 class="work-title">{project.title}</h3>
-              <p class="work-desc">{project.description}</p>
-              <ul class="work-tech">
-                {project.tech.map(t => <li class="tech-tag">{t}</li>)}
-              </ul>
-            </div>
-            <div class="work-links">
-              {project.github && (
-                <a href={project.github} target="_blank" rel="noopener noreferrer" class="work-link">
-                  GitHub
-                </a>
-              )}
-              {project.url && (
-                <a href={project.url} target="_blank" rel="noopener noreferrer" class="work-link">
-                  Live
-                </a>
-              )}
-            </div>
-          </div>
-        </li>
-      ))}
-    </ul>
-  </section>
-
-  <!-- Recent Tech -->
-  <section class="section container">
-    <header class="section-header">
-      <h2 class="section-title">기술 블로그</h2>
-      <a href="/tech" class="section-more">전체 보기 →</a>
-    </header>
-    <ul class="essay-list">
-      {techPosts.map(post => (
-        <li class="essay-item">
-          <a href={`/tech/${post.slug}`} class="essay-link">
-            <span class="essay-title">{post.data.title}</span>
-            <time class="essay-date" datetime={post.data.date.toISOString()}>
-              {formatDate(post.data.date)}
-            </time>
-          </a>
-        </li>
-      ))}
-    </ul>
+    <div class="tech-cta">
+      <div class="tech-cta-text">
+        <h2 class="tech-cta-title">Tech Blog</h2>
+        <p class="tech-cta-desc">개발 관련 글, 프로젝트, 이력서는 별도 사이트에서 확인할 수 있습니다.</p>
+      </div>
+      <a
+        href="/tech"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="tech-cta-link"
+      >
+        방문하기 ↗
+      </a>
+    </div>
   </section>
 </BaseLayout>
 
@@ -268,78 +223,54 @@ const formatDate = (date: Date) =>
     }
   }
 
-  /* Works */
-  .works-list {
-    list-style: none;
+  /* Tech Blog CTA */
+  .tech-cta {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
     gap: var(--spacing-md);
-  }
-
-  .work-item {
+    padding: var(--spacing-lg);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    padding: var(--spacing-lg);
     transition: border-color var(--transition);
   }
 
-  .work-item:hover {
+  .tech-cta:hover {
     border-color: var(--color-accent);
   }
 
-  .work-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: var(--spacing-md);
-  }
-
-  .work-title {
+  .tech-cta-title {
     font-size: 1rem;
     font-weight: 600;
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
   }
 
-  .work-desc {
-    font-size: 0.9rem;
+  .tech-cta-desc {
+    font-size: 0.875rem;
     color: var(--color-muted);
-    line-height: 1.6;
-    margin-bottom: var(--spacing-sm);
+    line-height: 1.5;
   }
 
-  .work-tech {
-    display: flex;
-    gap: var(--spacing-xs);
-    flex-wrap: wrap;
-    list-style: none;
-  }
-
-  .tech-tag {
-    font-size: 0.75rem;
-    background: var(--color-code-bg);
-    border: 1px solid var(--color-border);
-    padding: 0.1rem 0.4rem;
+  .tech-cta-link {
+    font-size: 0.875rem;
+    color: var(--color-accent);
+    border: 1px solid var(--color-accent);
+    padding: 0.375rem 0.875rem;
     border-radius: var(--radius-sm);
-    color: var(--color-muted);
-  }
-
-  .work-links {
-    display: flex;
-    gap: var(--spacing-sm);
+    white-space: nowrap;
     flex-shrink: 0;
-  }
-
-  .work-link {
-    font-size: 0.8125rem;
-    color: var(--color-muted);
-    border: 1px solid var(--color-border);
-    padding: 0.25rem 0.625rem;
-    border-radius: var(--radius-sm);
     transition: all var(--transition);
   }
 
-  .work-link:hover {
-    color: var(--color-fg);
-    border-color: var(--color-fg);
+  .tech-cta-link:hover {
+    background: var(--color-accent);
+    color: #fff;
+  }
+
+  @media (max-width: 640px) {
+    .tech-cta {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 </style>

@@ -1,8 +1,8 @@
 ---
 const navLinks = [
-  { href: '/gallery', label: 'Gallery' },
-  { href: '/essay', label: 'Essay' },
-  { href: '/inspirations', label: 'Inspirations' },
+  { href: '/tech', label: 'Blog' },
+  { href: '/works', label: 'Works' },
+  { href: '/resume', label: 'Resume' },
 ]
 
 const pathname = Astro.url.pathname
@@ -10,30 +10,22 @@ const pathname = Astro.url.pathname
 
 <header class="header">
   <div class="container header-inner">
-    <a href="/" class="logo" aria-label="Home">1lsang</a>
-    <nav aria-label="Main navigation">
+    <a href="/tech" class="logo" aria-label="Tech Home">
+      <span class="logo-name">1lsang</span>
+      <span class="logo-badge">dev</span>
+    </a>
+    <nav aria-label="Tech site navigation">
       <ul class="nav-list">
         {navLinks.map(link => (
           <li>
             <a
               href={link.href}
-              class:list={['nav-link', { 'nav-link--active': pathname.startsWith(link.href) }]}
+              class:list={['nav-link', { 'nav-link--active': pathname === link.href || (link.href !== '/tech' && pathname.startsWith(link.href)) || (link.href === '/tech' && (pathname === '/tech' || pathname.startsWith('/tech/'))) }]}
             >
               {link.label}
             </a>
           </li>
         ))}
-        <li>
-          <a
-            href="/tech"
-            class="nav-link nav-link--tech"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Tech blog (opens in new tab)"
-          >
-            Tech ↗
-          </a>
-        </li>
       </ul>
     </nav>
   </div>
@@ -44,7 +36,6 @@ const pathname = Astro.url.pathname
     position: sticky;
     top: 0;
     z-index: 50;
-    background: var(--color-bg);
     border-bottom: 1px solid var(--color-border);
     backdrop-filter: blur(8px);
     background: color-mix(in srgb, var(--color-bg) 90%, transparent);
@@ -58,15 +49,31 @@ const pathname = Astro.url.pathname
   }
 
   .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    text-decoration: none;
+  }
+
+  .logo:hover {
+    opacity: 0.7;
+  }
+
+  .logo-name {
     font-weight: 700;
     font-size: 1rem;
     letter-spacing: -0.03em;
     color: var(--color-fg);
   }
 
-  .logo:hover {
-    color: var(--color-fg);
-    opacity: 0.7;
+  .logo-badge {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    background: var(--color-accent);
+    color: #fff;
+    padding: 0.1em 0.4em;
+    border-radius: var(--radius-sm);
+    letter-spacing: 0.02em;
   }
 
   .nav-list {
@@ -85,16 +92,6 @@ const pathname = Astro.url.pathname
   .nav-link:hover,
   .nav-link--active {
     color: var(--color-fg);
-  }
-
-  .nav-link--tech {
-    color: var(--color-accent);
-    opacity: 0.8;
-  }
-
-  .nav-link--tech:hover {
-    opacity: 1;
-    color: var(--color-accent);
   }
 
   @media (max-width: 640px) {
