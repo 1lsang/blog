@@ -1,0 +1,111 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import { getCollection } from 'astro:content'
+
+const essays = (await getCollection('essay'))
+  .filter(e => !e.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' }).format(date)
+---
+
+<BaseLayout title="Essay" description="일상과 생각, 회고를 담은 에세이.">
+  <div class="container page">
+    <header class="page-header">
+      <h1 class="page-title">Essay</h1>
+      <p class="page-desc">총 {essays.length}편</p>
+    </header>
+
+    <ul class="essay-list">
+      {essays.map(essay => (
+        <li class="essay-item">
+          <a href={`/essay/${essay.slug}`} class="essay-link">
+            <div class="essay-info">
+              <h2 class="essay-title">{essay.data.title}</h2>
+              {essay.data.description && (
+                <p class="essay-desc">{essay.data.description}</p>
+              )}
+            </div>
+            <time class="essay-date" datetime={essay.data.date.toISOString()}>
+              {formatDate(essay.data.date)}
+            </time>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</BaseLayout>
+
+<style>
+  .page {
+    padding-top: var(--spacing-2xl);
+    padding-bottom: var(--spacing-3xl);
+  }
+
+  .page-header {
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .page-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .page-desc {
+    font-size: 0.9rem;
+    color: var(--color-muted);
+  }
+
+  .essay-list {
+    list-style: none;
+    max-width: var(--max-w-prose);
+  }
+
+  .essay-item {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .essay-item:first-child {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .essay-link {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg) 0;
+    transition: color var(--transition);
+  }
+
+  .essay-link:hover .essay-title {
+    color: var(--color-accent);
+  }
+
+  .essay-info {
+    flex: 1;
+  }
+
+  .essay-title {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: var(--spacing-xs);
+    transition: color var(--transition);
+  }
+
+  .essay-desc {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+
+  .essay-date {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+</style>

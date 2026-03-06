@@ -1,0 +1,71 @@
+---
+const year = new Date().getFullYear()
+const socialLinks = [
+  { href: 'https://github.com/1lsang', label: 'GitHub' },
+  { href: 'https://twitter.com/1lsang', label: 'X (Twitter)' },
+]
+---
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <p class="copyright">© {year} 1lsang</p>
+    <nav aria-label="Social links">
+      <ul class="social-list">
+        {socialLinks.map(link => (
+          <li>
+            <a href={link.href} class="social-link" target="_blank" rel="noopener noreferrer">
+              {link.label}
+            </a>
+          </li>
+        ))}
+        <li>
+          <a href="/rss.xml" class="social-link">RSS</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--color-border);
+    padding: var(--spacing-xl) 0;
+    margin-top: var(--spacing-3xl);
+  }
+
+  .footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+  }
+
+  .copyright {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+
+  .social-list {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    list-style: none;
+  }
+
+  .social-link {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    transition: color var(--transition);
+  }
+
+  .social-link:hover {
+    color: var(--color-fg);
+  }
+
+  @media (max-width: 640px) {
+    .footer-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import ProjectCard from '../../components/ProjectCard.astro'
+import projects from '../../../content/works/projects.json'
+
+const sorted = [...projects.items].sort((a, b) => b.year - a.year)
+---
+
+<BaseLayout title="Works" description="진행한 프로젝트와 오픈소스 기여 내역.">
+  <div class="container page">
+    <header class="page-header">
+      <h1 class="page-title">Works</h1>
+      <p class="page-desc">총 {sorted.length}개의 프로젝트</p>
+    </header>
+
+    <div class="projects-grid">
+      {sorted.map(project => (
+        <ProjectCard
+          title={project.title}
+          description={project.description}
+          tech={project.tech}
+          thumbnail={project.thumbnail}
+          github={project.github}
+          url={project.url}
+          year={project.year}
+        />
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .page {
+    padding-top: var(--spacing-2xl);
+    padding-bottom: var(--spacing-3xl);
+  }
+
+  .page-header {
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .page-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .page-desc {
+    font-size: 0.9rem;
+    color: var(--color-muted);
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--spacing-lg);
+  }
+
+  @media (max-width: 640px) {
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

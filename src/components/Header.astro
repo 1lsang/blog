@@ -1,0 +1,91 @@
+---
+const navLinks = [
+  { href: '/gallery', label: 'Gallery' },
+  { href: '/essay', label: 'Essay' },
+  { href: '/inspirations', label: 'Inspirations' },
+  { href: '/tech', label: 'Tech' },
+  { href: '/works', label: 'Works' },
+  { href: '/resume', label: 'Resume' },
+]
+
+const pathname = Astro.url.pathname
+---
+
+<header class="header">
+  <div class="container header-inner">
+    <a href="/" class="logo" aria-label="Home">1lsang</a>
+    <nav aria-label="Main navigation">
+      <ul class="nav-list">
+        {navLinks.map(link => (
+          <li>
+            <a
+              href={link.href}
+              class:list={['nav-link', { 'nav-link--active': pathname.startsWith(link.href) }]}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    backdrop-filter: blur(8px);
+    background: color-mix(in srgb, var(--color-bg) 90%, transparent);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 3.5rem;
+  }
+
+  .logo {
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: -0.03em;
+    color: var(--color-fg);
+  }
+
+  .logo:hover {
+    color: var(--color-fg);
+    opacity: 0.7;
+  }
+
+  .nav-list {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    list-style: none;
+  }
+
+  .nav-link {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    transition: color var(--transition);
+  }
+
+  .nav-link:hover,
+  .nav-link--active {
+    color: var(--color-fg);
+  }
+
+  @media (max-width: 640px) {
+    .nav-list {
+      gap: var(--spacing-md);
+    }
+
+    .nav-link {
+      font-size: 0.8125rem;
+    }
+  }
+</style>

@@ -1,0 +1,40 @@
+---
+import ProseLayout from '../../layouts/ProseLayout.astro'
+import Giscus from '../../components/Giscus'
+import { getCollection } from 'astro:content'
+
+export async function getStaticPaths() {
+  const posts = await getCollection('tech')
+  return posts
+    .filter(p => !p.data.draft)
+    .map(post => ({
+      params: { slug: post.slug },
+      props: { post },
+    }))
+}
+
+const { post } = Astro.props
+const { Content } = await post.render()
+
+const giscusRepo = import.meta.env.PUBLIC_GISCUS_REPO ?? ''
+const giscusRepoId = import.meta.env.PUBLIC_GISCUS_REPO_ID ?? ''
+const giscusCategoryId = import.meta.env.PUBLIC_GISCUS_CATEGORY_ID ?? ''
+---
+
+<ProseLayout
+  title={post.data.title}
+  description={post.data.description}
+  date={post.data.date}
+  tags={post.data.tags}
+>
+  <Content />
+
+  {giscusRepo && (
+    <Giscus
+      client:only="react"
+      repo={giscusRepo}
+      repoId={giscusRepoId}
+      categoryId={giscusCategoryId}
+    />
+  )}
+</ProseLayout>

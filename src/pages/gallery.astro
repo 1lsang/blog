@@ -1,0 +1,138 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import Lightbox from '../components/Lightbox'
+import galleryMeta from '../../content/personal/gallery/metadata.json'
+
+const images = [...galleryMeta.items].sort((a, b) => a.order - b.order)
+
+const lightboxImages = images.map(item => ({
+  src: `/gallery/${item.filename}`,
+  alt: item.caption,
+  caption: item.caption,
+}))
+---
+
+<BaseLayout title="Gallery" description="일상의 순간들을 담은 사진 갤러리.">
+  <div class="container page">
+    <header class="page-header">
+      <h1 class="page-title">Gallery</h1>
+      <p class="page-desc">{images.length}장의 사진</p>
+    </header>
+
+    <div class="gallery-grid" id="gallery-grid">
+      {images.map((item, index) => (
+        <button
+          class="gallery-item"
+          data-index={index}
+          aria-label={`사진 보기: ${item.caption}`}
+        >
+          <img
+            src={`/gallery/${item.filename}`}
+            alt={item.caption}
+            loading={index < 4 ? 'eager' : 'lazy'}
+            width="800"
+            height="600"
+          />
+          <span class="gallery-caption">{item.caption}</span>
+        </button>
+      ))}
+    </div>
+
+    <Lightbox
+      client:load
+      images={lightboxImages}
+    />
+  </div>
+</BaseLayout>
+
+<style>
+  .page {
+    padding-top: var(--spacing-2xl);
+    padding-bottom: var(--spacing-3xl);
+  }
+
+  .page-header {
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .page-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .page-desc {
+    font-size: 0.9rem;
+    color: var(--color-muted);
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--spacing-sm);
+  }
+
+  .gallery-item {
+    position: relative;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    background: var(--color-code-bg);
+    cursor: pointer;
+    border: none;
+    padding: 0;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 400ms ease;
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.04);
+  }
+
+  .gallery-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+    color: white;
+    font-size: 0.8125rem;
+    opacity: 0;
+    transition: opacity var(--transition);
+  }
+
+  .gallery-item:hover .gallery-caption,
+  .gallery-item:focus .gallery-caption {
+    opacity: 1;
+  }
+
+  .gallery-item:focus {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 640px) {
+    .gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
+
+<script>
+  const grid = document.getElementById('gallery-grid')
+  if (grid) {
+    grid.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest('[data-index]') as HTMLButtonElement
+      if (!btn) return
+      const index = parseInt(btn.dataset.index ?? '0', 10)
+      window.dispatchEvent(new CustomEvent('lightbox:open', { detail: { index } }))
+    })
+  }
+</script>
