@@ -1,10 +1,10 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro'
-import Lightbox from '../components/Lightbox'
-import galleryMeta from '../../content/personal/gallery/metadata.json'
-import { getLangFromUrl, useTranslations } from '../i18n/utils'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import Lightbox from '../../components/Lightbox'
+import galleryMeta from '../../../content/personal/gallery/metadata.json'
+import { useTranslations } from '../../i18n/utils'
 
-const lang = getLangFromUrl(Astro.url)
+const lang = 'ko'
 const t = useTranslations(lang)
 
 const images = [...galleryMeta.items].sort((a, b) => a.order - b.order)
@@ -42,10 +42,7 @@ const lightboxImages = images.map(item => ({
       ))}
     </div>
 
-    <Lightbox
-      client:load
-      images={lightboxImages}
-    />
+    <Lightbox client:load images={lightboxImages} />
   </div>
 </BaseLayout>
 
