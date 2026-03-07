@@ -1,6 +1,7 @@
 {
-  "framework": "astro",
-  "buildCommand": "git submodule update --init --recursive && npm run build",
+  "rootDirectory": "apps/web",
+  "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
+  "buildCommand": "cd ../.. && pnpm build --filter=@1lsang/web",
   "outputDirectory": "dist",
-  "installCommand": "npm install"
+  "framework": "astro"
 }

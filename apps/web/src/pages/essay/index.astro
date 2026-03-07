@@ -25,7 +25,7 @@ const formatDate = (date: Date) =>
     <ul class="essay-list">
       {essays.map(essay => (
         <li class="essay-item">
-          <a href={getLocalePath(`/essay/${essay.slug}`, lang)} class="essay-link">
+          <a href={getLocalePath(`/essay/${essay.id}`, lang)} class="essay-link">
             <div class="essay-info">
               <h2 class="essay-title">{essay.data.title}</h2>
               {essay.data.description && (

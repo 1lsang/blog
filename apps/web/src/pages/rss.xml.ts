@@ -13,7 +13,7 @@ export async function GET(context: APIContext) {
         title: e.data.title,
         pubDate: e.data.date,
         description: e.data.description ?? '',
-        link: `/essay/${e.slug}/`,
+        link: `/essay/${e.id}/`,
       })),
     ...techPosts
       .filter(t => !t.data.draft)
@@ -21,7 +21,7 @@ export async function GET(context: APIContext) {
         title: t.data.title,
         pubDate: t.data.date,
         description: t.data.description ?? '',
-        link: `/tech/${t.slug}/`,
+        link: `/tech/${t.id}/`,
       })),
   ].sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime())
 
