@@ -3,6 +3,7 @@ import SEO from '../components/SEO.astro'
 import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
 import '../styles/global.css'
+import { getLangFromUrl } from '../i18n/utils'
 
 interface Props {
   title?: string
@@ -13,10 +14,11 @@ interface Props {
 
 const { title, description, image, type } = Astro.props
 const umamiId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID
+const lang = getLangFromUrl(Astro.url)
 ---
 
 <!doctype html>
-<html lang="ko">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

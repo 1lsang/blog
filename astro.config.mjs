@@ -11,6 +11,13 @@ import rehypeRaw from 'rehype-raw'
 // https://astro.build/config
 export default defineConfig({
   site: 'https://1lsang.dev',
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'ko'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
   integrations: [
     react(),
     mdx({

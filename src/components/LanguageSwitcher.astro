@@ -1,0 +1,50 @@
+---
+import { languages } from '../i18n/translations'
+import { getLangFromUrl, getAlternatePath } from '../i18n/utils'
+
+const currentLang = getLangFromUrl(Astro.url)
+---
+
+<div class="lang-switcher" role="group" aria-label="Language switcher">
+  {Object.entries(languages).map(([lang]) => (
+    lang === currentLang
+      ? <span class="lang-item lang-item--active" aria-current="true">{lang.toUpperCase()}</span>
+      : <a
+          href={getAlternatePath(Astro.url, lang as keyof typeof languages)}
+          class="lang-item"
+          hreflang={lang}
+        >{lang.toUpperCase()}</a>
+  ))}
+</div>
+
+<style>
+  .lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 0.125rem;
+  }
+
+  .lang-item {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-muted);
+    padding: 0.125rem 0.375rem;
+    border-radius: 2px;
+    transition: all var(--transition);
+    letter-spacing: 0.04em;
+    text-decoration: none;
+  }
+
+  a.lang-item:hover {
+    color: var(--color-fg);
+  }
+
+  .lang-item--active {
+    background: var(--color-fg);
+    color: var(--color-bg);
+    cursor: default;
+  }
+</style>

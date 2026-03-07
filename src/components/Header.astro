@@ -1,16 +1,23 @@
 ---
+import LanguageSwitcher from './LanguageSwitcher.astro'
+import { getLangFromUrl, useTranslations, getLocalePath } from '../i18n/utils'
+
+const lang = getLangFromUrl(Astro.url)
+const t = useTranslations(lang)
+
 const navLinks = [
-  { href: '/gallery', label: 'Gallery' },
-  { href: '/essay', label: 'Essay' },
-  { href: '/inspirations', label: 'Inspirations' },
+  { href: getLocalePath('/gallery', lang), label: t('nav.gallery') },
+  { href: getLocalePath('/essay', lang), label: t('nav.essay') },
+  { href: getLocalePath('/inspirations', lang), label: t('nav.inspirations') },
 ]
 
 const pathname = Astro.url.pathname
+const homeHref = getLocalePath('/', lang)
 ---
 
 <header class="header">
   <div class="container header-inner">
-    <a href="/" class="logo" aria-label="Home">1lsang</a>
+    <a href={homeHref} class="logo" aria-label="Home">1lsang</a>
     <nav aria-label="Main navigation">
       <ul class="nav-list">
         {navLinks.map(link => (
@@ -31,11 +38,12 @@ const pathname = Astro.url.pathname
             rel="noopener noreferrer"
             aria-label="Tech blog (opens in new tab)"
           >
-            Tech ↗
+            {t('nav.tech')}
           </a>
         </li>
       </ul>
     </nav>
+    <LanguageSwitcher />
   </div>
 </header>
 
