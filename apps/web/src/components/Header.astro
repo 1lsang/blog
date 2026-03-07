@@ -1,5 +1,6 @@
 ---
 import LanguageSwitcher from './LanguageSwitcher.astro'
+import ThemeToggle from './ThemeToggle.astro'
 import { getLangFromUrl, useTranslations, getLocalePath } from '../i18n/utils'
 
 const lang = getLangFromUrl(Astro.url)
@@ -43,7 +44,10 @@ const homeHref = getLocalePath('/', lang)
         </li>
       </ul>
     </nav>
-    <LanguageSwitcher />
+    <div class="header-actions">
+      <ThemeToggle />
+      <LanguageSwitcher />
+    </div>
   </div>
 </header>
 
@@ -103,6 +107,12 @@ const homeHref = getLocalePath('/', lang)
   .nav-link--tech:hover {
     opacity: 1;
     color: var(--color-accent);
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
   }
 
   @media (max-width: 640px) {
