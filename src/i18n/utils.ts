@@ -27,10 +27,9 @@ export function getLocalePath(path: string, lang: Language): string {
 
 export function getAlternatePath(url: URL, targetLang: Language): string {
   const currentLang = getLangFromUrl(url)
-  if (currentLang === defaultLang) {
-    return `/${targetLang}${url.pathname}`
-  }
-  const withoutLang = url.pathname.replace(`/${currentLang}`, '') || '/'
+  const withoutLang = currentLang === defaultLang
+    ? url.pathname
+    : url.pathname.replace(`/${currentLang}`, '') || '/'
   if (targetLang === defaultLang) return withoutLang
   return `/${targetLang}${withoutLang}`
 }

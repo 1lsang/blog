@@ -5,16 +5,15 @@ import { getLangFromUrl, getAlternatePath } from '../i18n/utils'
 const currentLang = getLangFromUrl(Astro.url)
 ---
 
-<div class="lang-switcher" aria-label="Language switcher">
-  {Object.entries(languages).map(([lang, label]) => (
-    <a
-      href={getAlternatePath(Astro.url, lang as keyof typeof languages)}
-      class:list={['lang-link', { 'lang-link--active': lang === currentLang }]}
-      aria-current={lang === currentLang ? 'true' : undefined}
-      hreflang={lang}
-    >
-      {lang.toUpperCase()}
-    </a>
+<div class="lang-switcher" role="group" aria-label="Language switcher">
+  {Object.entries(languages).map(([lang]) => (
+    lang === currentLang
+      ? <span class="lang-item lang-item--active" aria-current="true">{lang.toUpperCase()}</span>
+      : <a
+          href={getAlternatePath(Astro.url, lang as keyof typeof languages)}
+          class="lang-item"
+          hreflang={lang}
+        >{lang.toUpperCase()}</a>
   ))}
 </div>
 
@@ -28,7 +27,7 @@ const currentLang = getLangFromUrl(Astro.url)
     padding: 0.125rem;
   }
 
-  .lang-link {
+  .lang-item {
     font-size: 0.75rem;
     font-weight: 600;
     color: var(--color-muted);
@@ -36,18 +35,16 @@ const currentLang = getLangFromUrl(Astro.url)
     border-radius: 2px;
     transition: all var(--transition);
     letter-spacing: 0.04em;
+    text-decoration: none;
   }
 
-  .lang-link:hover {
+  a.lang-item:hover {
     color: var(--color-fg);
   }
 
-  .lang-link--active {
+  .lang-item--active {
     background: var(--color-fg);
     color: var(--color-bg);
-  }
-
-  .lang-link--active:hover {
-    color: var(--color-bg);
+    cursor: default;
   }
 </style>
