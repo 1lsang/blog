@@ -1,0 +1,43 @@
+---
+import SEO from '../components/SEO.astro'
+import TechHeader from '../components/TechHeader.astro'
+import TechFooter from '../components/TechFooter.astro'
+import '../styles/global.css'
+
+interface Props {
+  title?: string
+  description?: string
+  image?: string
+  type?: 'website' | 'article'
+}
+
+const { title, description, image, type } = Astro.props
+const umamiId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="preload" as="style" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+    <SEO title={title} description={description} image={image} type={type} />
+    {umamiId && (
+      <script
+        defer
+        src="https://analytics.umami.is/script.js"
+        data-website-id={umamiId}
+      ></script>
+    )}
+  </head>
+  <body>
+    <TechHeader />
+    <main>
+      <slot />
+    </main>
+    <TechFooter />
+  </body>
+</html>

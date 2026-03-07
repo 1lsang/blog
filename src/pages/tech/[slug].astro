@@ -1,5 +1,5 @@
 ---
-import ProseLayout from '../../layouts/ProseLayout.astro'
+import TechProseLayout from '../../layouts/TechProseLayout.astro'
 import Giscus from '../../components/Giscus'
 import { getCollection } from 'astro:content'
 
@@ -21,7 +21,7 @@ const giscusRepoId = import.meta.env.PUBLIC_GISCUS_REPO_ID ?? ''
 const giscusCategoryId = import.meta.env.PUBLIC_GISCUS_CATEGORY_ID ?? ''
 ---
 
-<ProseLayout
+<TechProseLayout
   title={post.data.title}
   description={post.data.description}
   date={post.data.date}
@@ -37,4 +37,4 @@ const giscusCategoryId = import.meta.env.PUBLIC_GISCUS_CATEGORY_ID ?? ''
       categoryId={giscusCategoryId}
     />
   )}
-</ProseLayout>
+</TechProseLayout>

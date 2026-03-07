@@ -1,5 +1,5 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro'
+import TechLayout from '../../layouts/TechLayout.astro'
 import { getCollection } from 'astro:content'
 
 const posts = (await getCollection('tech'))
@@ -7,17 +7,17 @@ const posts = (await getCollection('tech'))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
 
 const formatDate = (date: Date) =>
-  new Intl.DateTimeFormat('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' }).format(date)
+  new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(date)
 
 // Collect all tags
 const allTags = [...new Set(posts.flatMap(p => p.data.tags))]
 ---
 
-<BaseLayout title="Tech" description="프론트엔드 개발 관련 기술 블로그.">
+<TechLayout title="Tech Blog" description="Frontend development articles and technical writings.">
   <div class="container page">
     <header class="page-header">
       <h1 class="page-title">Tech</h1>
-      <p class="page-desc">총 {posts.length}편의 기술 아티클</p>
+      <p class="page-desc">{posts.length} articles</p>
     </header>
 
     {allTags.length > 0 && (
@@ -51,7 +51,7 @@ const allTags = [...new Set(posts.flatMap(p => p.data.tags))]
       ))}
     </ul>
   </div>
-</BaseLayout>
+</TechLayout>
 
 <style>
   .page {

@@ -1,16 +1,16 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro'
+import TechLayout from '../../layouts/TechLayout.astro'
 import ProjectCard from '../../components/ProjectCard.astro'
 import projects from '../../../content/works/projects.json'
 
 const sorted = [...projects.items].sort((a, b) => b.year - a.year)
 ---
 
-<BaseLayout title="Works" description="진행한 프로젝트와 오픈소스 기여 내역.">
+<TechLayout title="Works" description="Projects and open source contributions.">
   <div class="container page">
     <header class="page-header">
       <h1 class="page-title">Works</h1>
-      <p class="page-desc">총 {sorted.length}개의 프로젝트</p>
+      <p class="page-desc">{sorted.length} projects</p>
     </header>
 
     <div class="projects-grid">
@@ -27,7 +27,7 @@ const sorted = [...projects.items].sort((a, b) => b.year - a.year)
       ))}
     </div>
   </div>
-</BaseLayout>
+</TechLayout>
 
 <style>
   .page {
