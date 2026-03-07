@@ -1,9 +1,10 @@
 ---
 import TechLayout from '../../layouts/TechLayout.astro'
 import ProjectCard from '../../components/ProjectCard.astro'
-import projects from '../../../content/works/projects.json'
+import { meta as ohMyClaudecode } from '@1lsang/work-oh-my-claudecode'
+import { meta as personalBlog } from '@1lsang/work-personal-blog'
 
-const sorted = [...projects.items].sort((a, b) => b.year - a.year)
+const sorted = [ohMyClaudecode, personalBlog].sort((a, b) => b.year - a.year)
 ---
 
 <TechLayout title="Works" description="Projects and open source contributions.">

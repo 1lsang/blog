@@ -1,10 +1,10 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro'
+import BaseLayout from '../../layouts/BaseLayout.astro'
 import { getCollection } from 'astro:content'
-import galleryMeta from '../../content/personal/gallery/metadata.json'
-import { getLangFromUrl, useTranslations, getLocalePath } from '../i18n/utils'
+import galleryMeta from '../../../content/personal/gallery/metadata.json'
+import { useTranslations, getLocalePath } from '../../i18n/utils'
 
-const lang = getLangFromUrl(Astro.url)
+const lang = 'ko'
 const t = useTranslations(lang)
 
 const essays = (await getCollection('essay'))
@@ -16,9 +16,8 @@ const galleryPreview = [...galleryMeta.items]
   .sort((a, b) => a.order - b.order)
   .slice(0, 4)
 
-const dateLocale = lang === 'ko' ? 'ko-KR' : 'en-US'
 const formatDate = (date: Date) =>
-  new Intl.DateTimeFormat(dateLocale, { year: 'numeric', month: 'long', day: 'numeric' }).format(date)
+  new Intl.DateTimeFormat('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' }).format(date)
 ---
 
 <BaseLayout>
@@ -40,7 +39,7 @@ const formatDate = (date: Date) =>
     <ul class="essay-list">
       {essays.map(essay => (
         <li class="essay-item">
-          <a href={getLocalePath(`/essay/${essay.slug}`, lang)} class="essay-link">
+          <a href={getLocalePath(`/essay/${essay.id}`, lang)} class="essay-link">
             <span class="essay-title">{essay.data.title}</span>
             <time class="essay-date" datetime={essay.data.date.toISOString()}>
               {formatDate(essay.data.date)}
@@ -152,7 +151,6 @@ const formatDate = (date: Date) =>
     color: var(--color-fg);
   }
 
-  /* Essay list */
   .essay-list {
     list-style: none;
     display: flex;
@@ -194,7 +192,6 @@ const formatDate = (date: Date) =>
     flex-shrink: 0;
   }
 
-  /* Gallery preview */
   .gallery-preview {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -225,7 +222,6 @@ const formatDate = (date: Date) =>
     }
   }
 
-  /* Tech Blog CTA */
   .tech-cta {
     display: flex;
     align-items: center;
