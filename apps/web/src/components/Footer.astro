@@ -6,227 +6,63 @@ const socialLinks = [
 ]
 ---
 
-<footer class="footer">
+<footer class="border-t border-border mt-16">
   <!-- Email Subscription -->
-  <div class="subscribe-section container">
-    <div class="subscribe-inner">
-      <div class="subscribe-text">
-        <h2 class="subscribe-title">Stay updated</h2>
-        <p class="subscribe-desc">New essays and occasional notes, delivered to your inbox.</p>
+  <div class="container py-12 border-b border-border">
+    <div class="flex items-center justify-between gap-12 max-md:flex-col max-md:items-start max-md:gap-6">
+      <div>
+        <h2 class="text-base font-semibold mb-1">Stay updated</h2>
+        <p class="text-sm text-muted leading-relaxed">New essays and occasional notes, delivered to your inbox.</p>
       </div>
       <form
-        class="subscribe-form"
+        class="shrink-0 max-md:w-full"
         id="subscribe-form"
         method="POST"
         action="/api/subscribe"
       >
-        <div class="form-row">
+        <div class="flex gap-2 mb-1 max-md:flex-col">
           <label for="subscribe-email" class="sr-only">Email address</label>
           <input
             type="email"
             id="subscribe-email"
             name="email"
-            class="email-input"
+            class="font-[inherit] text-sm text-fg bg-bg border border-border rounded px-3 py-2 w-64 transition-colors outline-none focus:border-accent placeholder:text-muted/60 max-md:w-full"
             placeholder="your@email.com"
             required
             autocomplete="email"
           />
-          <button type="submit" class="subscribe-btn">Subscribe</button>
+          <button
+            type="submit"
+            class="font-[inherit] text-sm font-medium text-white bg-accent border border-accent rounded px-4 py-2 cursor-pointer whitespace-nowrap transition-[background,opacity] hover:opacity-85 disabled:opacity-50 disabled:cursor-not-allowed max-md:w-full"
+          >Subscribe</button>
         </div>
-        <p class="form-hint">No spam. Unsubscribe anytime.</p>
+        <p class="text-xs text-muted opacity-70">No spam. Unsubscribe anytime.</p>
       </form>
-      <div class="subscribe-success" id="subscribe-success" hidden>
-        <p class="success-msg">You're subscribed. Thank you!</p>
+      <div class="shrink-0" id="subscribe-success" hidden>
+        <p class="text-sm text-accent font-medium">You're subscribed. Thank you!</p>
       </div>
     </div>
   </div>
 
   <!-- Footer bottom -->
-  <div class="container footer-inner">
-    <p class="copyright">© {year} 1lsang</p>
+  <div class="container flex items-center justify-between gap-4 py-6 max-sm:flex-col max-sm:items-start">
+    <p class="text-sm text-muted">© {year} 1lsang</p>
     <nav aria-label="Social links">
-      <ul class="social-list">
+      <ul class="flex items-center gap-4 list-none">
         {socialLinks.map(link => (
           <li>
-            <a href={link.href} class="social-link" target="_blank" rel="noopener noreferrer">
+            <a href={link.href} class="text-sm text-muted transition-colors hover:text-fg" target="_blank" rel="noopener noreferrer">
               {link.label}
             </a>
           </li>
         ))}
         <li>
-          <a href="/rss.xml" class="social-link">RSS</a>
+          <a href="/rss.xml" class="text-sm text-muted transition-colors hover:text-fg">RSS</a>
         </li>
       </ul>
     </nav>
   </div>
 </footer>
-
-<style>
-  .footer {
-    border-top: 1px solid var(--color-border);
-    margin-top: var(--spacing-3xl);
-  }
-
-  /* Subscribe section */
-  .subscribe-section {
-    padding-top: var(--spacing-2xl);
-    padding-bottom: var(--spacing-2xl);
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .subscribe-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--spacing-2xl);
-  }
-
-  .subscribe-title {
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: var(--spacing-xs);
-  }
-
-  .subscribe-desc {
-    font-size: 0.875rem;
-    color: var(--color-muted);
-    line-height: 1.5;
-  }
-
-  .subscribe-form {
-    flex-shrink: 0;
-  }
-
-  .form-row {
-    display: flex;
-    gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-xs);
-  }
-
-  .email-input {
-    font-family: inherit;
-    font-size: 0.875rem;
-    color: var(--color-fg);
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
-    padding: 0.5rem 0.75rem;
-    width: 16rem;
-    transition: border-color var(--transition);
-    outline: none;
-  }
-
-  .email-input::placeholder {
-    color: var(--color-muted);
-    opacity: 0.6;
-  }
-
-  .email-input:focus {
-    border-color: var(--color-accent);
-  }
-
-  .subscribe-btn {
-    font-family: inherit;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #fff;
-    background: var(--color-accent);
-    border: 1px solid var(--color-accent);
-    border-radius: var(--radius-sm);
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: background var(--transition), opacity var(--transition);
-  }
-
-  .subscribe-btn:hover {
-    opacity: 0.85;
-  }
-
-  .subscribe-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  .form-hint {
-    font-size: 0.75rem;
-    color: var(--color-muted);
-    opacity: 0.7;
-  }
-
-  .subscribe-success {
-    flex-shrink: 0;
-  }
-
-  .success-msg {
-    font-size: 0.875rem;
-    color: var(--color-accent);
-    font-weight: 500;
-  }
-
-  /* Footer bottom */
-  .footer-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--spacing-md);
-    padding-top: var(--spacing-lg);
-    padding-bottom: var(--spacing-lg);
-  }
-
-  .copyright {
-    font-size: 0.875rem;
-    color: var(--color-muted);
-  }
-
-  .social-list {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-md);
-    list-style: none;
-  }
-
-  .social-link {
-    font-size: 0.875rem;
-    color: var(--color-muted);
-    transition: color var(--transition);
-  }
-
-  .social-link:hover {
-    color: var(--color-fg);
-  }
-
-  @media (max-width: 768px) {
-    .subscribe-inner {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: var(--spacing-lg);
-    }
-
-    .subscribe-form {
-      width: 100%;
-    }
-
-    .form-row {
-      flex-direction: column;
-    }
-
-    .email-input {
-      width: 100%;
-    }
-
-    .subscribe-btn {
-      width: 100%;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .footer-inner {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  }
-</style>
 
 <script>
   const form = document.getElementById('subscribe-form') as HTMLFormElement | null

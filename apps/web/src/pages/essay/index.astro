@@ -16,23 +16,23 @@ const formatDate = (date: Date) =>
 ---
 
 <BaseLayout title={t('essay.title')} description="Essays on life, thoughts, and reflections.">
-  <div class="container page">
-    <header class="page-header">
-      <h1 class="page-title">{t('essay.title')}</h1>
-      <p class="page-desc">{t('essay.count', { n: essays.length })}</p>
+  <div class="container py-8 pb-16">
+    <header class="mb-8">
+      <h1 class="text-[clamp(1.75rem,4vw,2.5rem)] font-bold tracking-[-0.03em] mb-1">{t('essay.title')}</h1>
+      <p class="text-[0.9rem] text-muted">{t('essay.count', { n: essays.length })}</p>
     </header>
 
-    <ul class="essay-list">
+    <ul class="list-none max-w-prose">
       {essays.map(essay => (
-        <li class="essay-item">
-          <a href={getLocalePath(`/essay/${essay.id}`, lang)} class="essay-link">
-            <div class="essay-info">
-              <h2 class="essay-title">{essay.data.title}</h2>
+        <li class="border-b border-border first:border-t first:border-border">
+          <a href={getLocalePath(`/essay/${essay.id}`, lang)} class="group flex items-baseline justify-between gap-6 py-6">
+            <div class="flex-1">
+              <h2 class="text-base font-medium mb-1 transition-colors group-hover:text-accent">{essay.data.title}</h2>
               {essay.data.description && (
-                <p class="essay-desc">{essay.data.description}</p>
+                <p class="text-sm text-muted leading-relaxed">{essay.data.description}</p>
               )}
             </div>
-            <time class="essay-date" datetime={essay.data.date.toISOString()}>
+            <time class="text-[0.8125rem] text-muted whitespace-nowrap shrink-0" datetime={essay.data.date.toISOString()}>
               {formatDate(essay.data.date)}
             </time>
           </a>
@@ -41,76 +41,3 @@ const formatDate = (date: Date) =>
     </ul>
   </div>
 </BaseLayout>
-
-<style>
-  .page {
-    padding-top: var(--spacing-2xl);
-    padding-bottom: var(--spacing-3xl);
-  }
-
-  .page-header {
-    margin-bottom: var(--spacing-xl);
-  }
-
-  .page-title {
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    margin-bottom: var(--spacing-xs);
-  }
-
-  .page-desc {
-    font-size: 0.9rem;
-    color: var(--color-muted);
-  }
-
-  .essay-list {
-    list-style: none;
-    max-width: var(--max-w-prose);
-  }
-
-  .essay-item {
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .essay-item:first-child {
-    border-top: 1px solid var(--color-border);
-  }
-
-  .essay-link {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--spacing-lg);
-    padding: var(--spacing-lg) 0;
-    transition: color var(--transition);
-  }
-
-  .essay-link:hover .essay-title {
-    color: var(--color-accent);
-  }
-
-  .essay-info {
-    flex: 1;
-  }
-
-  .essay-title {
-    font-size: 1rem;
-    font-weight: 500;
-    margin-bottom: var(--spacing-xs);
-    transition: color var(--transition);
-  }
-
-  .essay-desc {
-    font-size: 0.875rem;
-    color: var(--color-muted);
-    line-height: 1.5;
-  }
-
-  .essay-date {
-    font-size: 0.8125rem;
-    color: var(--color-muted);
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-</style>
