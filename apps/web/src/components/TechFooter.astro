@@ -2,77 +2,17 @@
 const year = new Date().getFullYear()
 ---
 
-<footer class="footer">
-  <div class="container footer-inner">
-    <div class="footer-left">
-      <p class="copyright">© {year} 1lsang</p>
-      <p class="footer-desc">Frontend Engineer · Building interfaces with care.</p>
+<footer class="border-t border-border py-8 mt-16">
+  <div class="container flex items-start justify-between gap-4 max-sm:flex-col">
+    <div class="flex flex-col gap-1">
+      <p class="text-sm text-muted">© {year} 1lsang</p>
+      <p class="text-[0.8125rem] text-muted opacity-70">Frontend Engineer · Building interfaces with care.</p>
     </div>
     <nav aria-label="Tech site footer links">
-      <ul class="link-list">
-        <li><a href="https://github.com/1lsang" class="footer-link" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-        <li><a href="/rss.xml" class="footer-link">RSS</a></li>
+      <ul class="flex items-center gap-4 list-none max-sm:flex-wrap max-sm:gap-2">
+        <li><a href="https://github.com/1lsang" class="text-sm text-muted transition-colors hover:text-fg" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+        <li><a href="/rss.xml" class="text-sm text-muted transition-colors hover:text-fg">RSS</a></li>
       </ul>
     </nav>
   </div>
 </footer>
-
-<style>
-  .footer {
-    border-top: 1px solid var(--color-border);
-    padding: var(--spacing-xl) 0;
-    margin-top: var(--spacing-3xl);
-  }
-
-  .footer-inner {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: var(--spacing-md);
-  }
-
-  .footer-left {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-xs);
-  }
-
-  .copyright {
-    font-size: 0.875rem;
-    color: var(--color-muted);
-  }
-
-  .footer-desc {
-    font-size: 0.8125rem;
-    color: var(--color-muted);
-    opacity: 0.7;
-  }
-
-  .link-list {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-md);
-    list-style: none;
-  }
-
-  .footer-link {
-    font-size: 0.875rem;
-    color: var(--color-muted);
-    transition: color var(--transition);
-  }
-
-  .footer-link:hover {
-    color: var(--color-fg);
-  }
-
-  @media (max-width: 640px) {
-    .footer-inner {
-      flex-direction: column;
-    }
-
-    .link-list {
-      flex-wrap: wrap;
-      gap: var(--spacing-sm);
-    }
-  }
-</style>

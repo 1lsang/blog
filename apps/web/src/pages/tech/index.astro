@@ -14,36 +14,38 @@ const allTags = [...new Set(posts.flatMap(p => p.data.tags))]
 ---
 
 <TechLayout title="Tech Blog" description="Frontend development articles and technical writings.">
-  <div class="container page">
-    <header class="page-header">
-      <h1 class="page-title">Tech</h1>
-      <p class="page-desc">{posts.length} articles</p>
+  <div class="container py-8 pb-16">
+    <header class="mb-8">
+      <h1 class="text-[clamp(1.75rem,4vw,2.5rem)] font-bold tracking-[-0.03em] mb-1">Tech</h1>
+      <p class="text-[0.9rem] text-muted">{posts.length} articles</p>
     </header>
 
     {allTags.length > 0 && (
-      <div class="tag-cloud" aria-label="태그 목록">
+      <div class="flex gap-1 flex-wrap mb-8" aria-label="태그 목록">
         {allTags.map(tag => (
-          <span class="tag">{tag}</span>
+          <span class="text-[0.8125rem] bg-code-bg border border-border px-[0.6rem] py-[0.2rem] rounded-full text-muted">{tag}</span>
         ))}
       </div>
     )}
 
-    <ul class="post-list">
+    <ul class="list-none max-w-prose">
       {posts.map(post => (
-        <li class="post-item">
-          <a href={`/tech/${post.id}`} class="post-link">
-            <div class="post-info">
-              <h2 class="post-title">{post.data.title}</h2>
+        <li class="border-b border-border first:border-t first:border-border">
+          <a href={`/tech/${post.id}`} class="group flex items-start justify-between gap-6 py-6">
+            <div class="flex-1">
+              <h2 class="text-base font-medium mb-1 transition-colors group-hover:text-accent">{post.data.title}</h2>
               {post.data.description && (
-                <p class="post-desc">{post.data.description}</p>
+                <p class="text-sm text-muted leading-relaxed mb-2">{post.data.description}</p>
               )}
               {post.data.tags.length > 0 && (
-                <ul class="post-tags" aria-label="태그">
-                  {post.data.tags.map(tag => <li class="post-tag">{tag}</li>)}
+                <ul class="flex gap-1 list-none flex-wrap" aria-label="태그">
+                  {post.data.tags.map(tag => (
+                    <li class="text-xs text-muted bg-code-bg border border-border px-[0.4rem] py-[0.1rem] rounded">{tag}</li>
+                  ))}
                 </ul>
               )}
             </div>
-            <time class="post-date" datetime={post.data.date.toISOString()}>
+            <time class="text-[0.8125rem] text-muted whitespace-nowrap shrink-0 pt-[0.125rem]" datetime={post.data.date.toISOString()}>
               {formatDate(post.data.date)}
             </time>
           </a>
@@ -52,110 +54,3 @@ const allTags = [...new Set(posts.flatMap(p => p.data.tags))]
     </ul>
   </div>
 </TechLayout>
-
-<style>
-  .page {
-    padding-top: var(--spacing-2xl);
-    padding-bottom: var(--spacing-3xl);
-  }
-
-  .page-header {
-    margin-bottom: var(--spacing-xl);
-  }
-
-  .page-title {
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    margin-bottom: var(--spacing-xs);
-  }
-
-  .page-desc {
-    font-size: 0.9rem;
-    color: var(--color-muted);
-  }
-
-  .tag-cloud {
-    display: flex;
-    gap: var(--spacing-xs);
-    flex-wrap: wrap;
-    margin-bottom: var(--spacing-xl);
-  }
-
-  .tag {
-    font-size: 0.8125rem;
-    background: var(--color-code-bg);
-    border: 1px solid var(--color-border);
-    padding: 0.2rem 0.6rem;
-    border-radius: 2rem;
-    color: var(--color-muted);
-  }
-
-  .post-list {
-    list-style: none;
-    max-width: var(--max-w-prose);
-  }
-
-  .post-item {
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .post-item:first-child {
-    border-top: 1px solid var(--color-border);
-  }
-
-  .post-link {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: var(--spacing-lg);
-    padding: var(--spacing-lg) 0;
-    transition: color var(--transition);
-  }
-
-  .post-link:hover .post-title {
-    color: var(--color-accent);
-  }
-
-  .post-info {
-    flex: 1;
-  }
-
-  .post-title {
-    font-size: 1rem;
-    font-weight: 500;
-    margin-bottom: var(--spacing-xs);
-    transition: color var(--transition);
-  }
-
-  .post-desc {
-    font-size: 0.875rem;
-    color: var(--color-muted);
-    line-height: 1.5;
-    margin-bottom: var(--spacing-sm);
-  }
-
-  .post-tags {
-    display: flex;
-    gap: var(--spacing-xs);
-    list-style: none;
-    flex-wrap: wrap;
-  }
-
-  .post-tag {
-    font-size: 0.75rem;
-    color: var(--color-muted);
-    background: var(--color-code-bg);
-    border: 1px solid var(--color-border);
-    padding: 0.1rem 0.4rem;
-    border-radius: var(--radius-sm);
-  }
-
-  .post-date {
-    font-size: 0.8125rem;
-    color: var(--color-muted);
-    white-space: nowrap;
-    flex-shrink: 0;
-    padding-top: 0.125rem;
-  }
-</style>

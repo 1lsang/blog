@@ -8,13 +8,13 @@ const sorted = [ohMyClaudecode, personalBlog].sort((a, b) => b.year - a.year)
 ---
 
 <TechLayout title="Works" description="Projects and open source contributions.">
-  <div class="container page">
-    <header class="page-header">
-      <h1 class="page-title">Works</h1>
-      <p class="page-desc">{sorted.length} projects</p>
+  <div class="container py-8 pb-16">
+    <header class="mb-8">
+      <h1 class="text-[clamp(1.75rem,4vw,2.5rem)] font-bold tracking-[-0.03em] mb-1">Works</h1>
+      <p class="text-[0.9rem] text-muted">{sorted.length} projects</p>
     </header>
 
-    <div class="projects-grid">
+    <div class="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-6 max-sm:grid-cols-1">
       {sorted.map(project => (
         <ProjectCard
           title={project.title}
@@ -29,38 +29,3 @@ const sorted = [ohMyClaudecode, personalBlog].sort((a, b) => b.year - a.year)
     </div>
   </div>
 </TechLayout>
-
-<style>
-  .page {
-    padding-top: var(--spacing-2xl);
-    padding-bottom: var(--spacing-3xl);
-  }
-
-  .page-header {
-    margin-bottom: var(--spacing-xl);
-  }
-
-  .page-title {
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    margin-bottom: var(--spacing-xs);
-  }
-
-  .page-desc {
-    font-size: 0.9rem;
-    color: var(--color-muted);
-  }
-
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: var(--spacing-lg);
-  }
-
-  @media (max-width: 640px) {
-    .projects-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>

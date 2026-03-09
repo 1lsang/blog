@@ -12,35 +12,12 @@ const t = useTranslations(lang)
   title={t('inspirations.title')}
   description={t('inspirations.desc')}
 >
-  <div class="container page">
-    <header class="page-header">
-      <h1 class="page-title">{t('inspirations.title')}</h1>
-      <p class="page-desc">{t('inspirations.subtitle')}</p>
+  <div class="container py-8 pb-16">
+    <header class="mb-8">
+      <h1 class="text-[clamp(1.75rem,4vw,2.5rem)] font-bold tracking-[-0.03em] mb-1">{t('inspirations.title')}</h1>
+      <p class="text-[0.9rem] text-muted">{t('inspirations.subtitle')}</p>
     </header>
 
     <InspirationFilter client:load items={data.items} />
   </div>
 </BaseLayout>
-
-<style>
-  .page {
-    padding-top: var(--spacing-2xl);
-    padding-bottom: var(--spacing-3xl);
-  }
-
-  .page-header {
-    margin-bottom: var(--spacing-xl);
-  }
-
-  .page-title {
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    margin-bottom: var(--spacing-xs);
-  }
-
-  .page-desc {
-    font-size: 0.9rem;
-    color: var(--color-muted);
-  }
-</style>

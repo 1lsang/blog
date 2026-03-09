@@ -12,140 +12,34 @@ interface Props {
 const { title, description, tech, thumbnail, github, url, year } = Astro.props
 ---
 
-<article class="project-card">
+<article class="group border border-border rounded-xl overflow-hidden transition-colors hover:border-accent">
   {thumbnail && (
-    <div class="project-thumb">
-      <img src={thumbnail} alt={title} loading="lazy" width="600" height="338" />
+    <div class="w-full aspect-[16/9] bg-code-bg overflow-hidden">
+      <img src={thumbnail} alt={title} loading="lazy" width="600" height="338" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
     </div>
   )}
-  <div class="project-body">
-    <div class="project-meta">
-      <span class="project-year">{year}</span>
+  <div class="p-6 flex flex-col gap-2">
+    <div class="flex items-center gap-2">
+      <span class="text-[0.8125rem] text-muted">{year}</span>
     </div>
-    <h2 class="project-title">{title}</h2>
-    <p class="project-desc">{description}</p>
-    <ul class="project-tech" aria-label="기술 스택">
-      {tech.map(t => <li class="tech-tag">{t}</li>)}
+    <h2 class="text-lg font-semibold tracking-[-0.02em]">{title}</h2>
+    <p class="text-[0.9rem] text-muted leading-relaxed">{description}</p>
+    <ul class="flex gap-1 flex-wrap list-none" aria-label="기술 스택">
+      {tech.map(t => (
+        <li class="text-xs bg-code-bg border border-border px-2 py-[0.15rem] rounded text-muted">{t}</li>
+      ))}
     </ul>
-    <div class="project-links">
+    <div class="flex gap-2 mt-1">
       {github && (
-        <a href={github} class="project-link" target="_blank" rel="noopener noreferrer">
+        <a href={github} class="text-[0.8125rem] px-3 py-[0.35rem] border border-border rounded text-muted transition-all hover:text-fg hover:border-fg" target="_blank" rel="noopener noreferrer">
           GitHub ↗
         </a>
       )}
       {url && (
-        <a href={url} class="project-link project-link--primary" target="_blank" rel="noopener noreferrer">
+        <a href={url} class="text-[0.8125rem] px-3 py-[0.35rem] border border-fg rounded bg-fg text-bg transition-all hover:opacity-80 hover:text-bg" target="_blank" rel="noopener noreferrer">
           Live ↗
         </a>
       )}
     </div>
   </div>
 </article>
-
-<style>
-  .project-card {
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    transition: border-color var(--transition);
-  }
-
-  .project-card:hover {
-    border-color: var(--color-accent);
-  }
-
-  .project-thumb {
-    width: 100%;
-    aspect-ratio: 16/9;
-    background: var(--color-code-bg);
-    overflow: hidden;
-  }
-
-  .project-thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 300ms ease;
-  }
-
-  .project-card:hover .project-thumb img {
-    transform: scale(1.02);
-  }
-
-  .project-body {
-    padding: var(--spacing-lg);
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
-  }
-
-  .project-meta {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-  }
-
-  .project-year {
-    font-size: 0.8125rem;
-    color: var(--color-muted);
-  }
-
-  .project-title {
-    font-size: 1.125rem;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-  }
-
-  .project-desc {
-    font-size: 0.9rem;
-    color: var(--color-muted);
-    line-height: 1.6;
-  }
-
-  .project-tech {
-    display: flex;
-    gap: var(--spacing-xs);
-    flex-wrap: wrap;
-    list-style: none;
-  }
-
-  .tech-tag {
-    font-size: 0.75rem;
-    background: var(--color-code-bg);
-    border: 1px solid var(--color-border);
-    padding: 0.15rem 0.5rem;
-    border-radius: var(--radius-sm);
-    color: var(--color-muted);
-  }
-
-  .project-links {
-    display: flex;
-    gap: var(--spacing-sm);
-    margin-top: var(--spacing-xs);
-  }
-
-  .project-link {
-    font-size: 0.8125rem;
-    padding: 0.35rem 0.75rem;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
-    color: var(--color-muted);
-    transition: all var(--transition);
-  }
-
-  .project-link:hover {
-    color: var(--color-fg);
-    border-color: var(--color-fg);
-  }
-
-  .project-link--primary {
-    background: var(--color-fg);
-    color: var(--color-bg);
-    border-color: var(--color-fg);
-  }
-
-  .project-link--primary:hover {
-    opacity: 0.8;
-    color: var(--color-bg);
-  }
-</style>

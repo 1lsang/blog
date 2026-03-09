@@ -22,26 +22,26 @@ const formatDate = (date: Date) =>
 
 <BaseLayout>
   <!-- Hero -->
-  <section class="hero container">
-    <div class="hero-inner">
-      <h1 class="hero-name">{t('hero.name')}</h1>
-      <p class="hero-tagline">{t('hero.tagline')}</p>
-      <p class="hero-desc" set:html={t('hero.desc').replace('\n', '<br />')} />
+  <section class="container py-16 border-b border-border">
+    <div class="max-w-[36rem]">
+      <h1 class="text-[clamp(2rem,6vw,3.5rem)] font-bold tracking-[-0.04em] mb-4">{t('hero.name')}</h1>
+      <p class="text-lg font-medium mb-4">{t('hero.tagline')}</p>
+      <p class="text-base text-muted leading-[1.8]" set:html={t('hero.desc').replace('\n', '<br />')} />
     </div>
   </section>
 
   <!-- Recent Essays -->
-  <section class="section container">
-    <header class="section-header">
-      <h2 class="section-title">{t('section.recentEssays')}</h2>
-      <a href={getLocalePath('/essay', lang)} class="section-more">{t('section.viewAll')}</a>
+  <section class="container py-12 border-b border-border">
+    <header class="flex items-baseline justify-between mb-6">
+      <h2 class="text-sm font-semibold uppercase tracking-[0.08em] text-muted">{t('section.recentEssays')}</h2>
+      <a href={getLocalePath('/essay', lang)} class="text-sm text-muted transition-colors hover:text-fg">{t('section.viewAll')}</a>
     </header>
-    <ul class="essay-list">
+    <ul class="list-none flex flex-col">
       {essays.map(essay => (
-        <li class="essay-item">
-          <a href={getLocalePath(`/essay/${essay.id}`, lang)} class="essay-link">
-            <span class="essay-title">{essay.data.title}</span>
-            <time class="essay-date" datetime={essay.data.date.toISOString()}>
+        <li class="border-b border-border first:border-t first:border-border">
+          <a href={getLocalePath(`/essay/${essay.id}`, lang)} class="group flex items-baseline justify-between gap-4 py-4">
+            <span class="text-base font-medium transition-colors group-hover:text-accent">{essay.data.title}</span>
+            <time class="text-[0.8125rem] text-muted whitespace-nowrap shrink-0" datetime={essay.data.date.toISOString()}>
               {formatDate(essay.data.date)}
             </time>
           </a>
@@ -51,20 +51,21 @@ const formatDate = (date: Date) =>
   </section>
 
   <!-- Gallery Preview -->
-  <section class="section container">
-    <header class="section-header">
-      <h2 class="section-title">{t('section.gallery')}</h2>
-      <a href={getLocalePath('/gallery', lang)} class="section-more">{t('section.viewAll')}</a>
+  <section class="container py-12 border-b border-border">
+    <header class="flex items-baseline justify-between mb-6">
+      <h2 class="text-sm font-semibold uppercase tracking-[0.08em] text-muted">{t('section.gallery')}</h2>
+      <a href={getLocalePath('/gallery', lang)} class="text-sm text-muted transition-colors hover:text-fg">{t('section.viewAll')}</a>
     </header>
-    <div class="gallery-preview">
+    <div class="grid grid-cols-4 gap-2 max-sm:grid-cols-2">
       {galleryPreview.map(item => (
-        <a href={getLocalePath('/gallery', lang)} class="gallery-thumb" aria-label={item.caption}>
+        <a href={getLocalePath('/gallery', lang)} class="group aspect-[4/3] overflow-hidden rounded-lg bg-code-bg block" aria-label={item.caption}>
           <img
             src={`/gallery/${item.filename}`}
             alt={item.caption}
             loading="lazy"
             width="400"
             height="300"
+            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
           />
         </a>
       ))}
@@ -72,203 +73,20 @@ const formatDate = (date: Date) =>
   </section>
 
   <!-- Tech Blog CTA -->
-  <section class="section container">
-    <div class="tech-cta">
-      <div class="tech-cta-text">
-        <h2 class="tech-cta-title">{t('section.techBlog')}</h2>
-        <p class="tech-cta-desc">{t('section.techBlogDesc')}</p>
+  <section class="container py-12">
+    <div class="flex items-center justify-between gap-4 p-6 border border-border rounded-xl transition-colors hover:border-accent max-sm:flex-col max-sm:items-start">
+      <div>
+        <h2 class="text-base font-semibold mb-1">{t('section.techBlog')}</h2>
+        <p class="text-sm text-muted leading-relaxed">{t('section.techBlogDesc')}</p>
       </div>
       <a
         href="/tech"
         target="_blank"
         rel="noopener noreferrer"
-        class="tech-cta-link"
+        class="text-sm text-accent border border-accent px-3.5 py-1.5 rounded whitespace-nowrap shrink-0 transition-all hover:bg-accent hover:text-white"
       >
         {t('section.visitTech')}
       </a>
     </div>
   </section>
 </BaseLayout>
-
-<style>
-  .hero {
-    padding-top: var(--spacing-3xl);
-    padding-bottom: var(--spacing-3xl);
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .hero-inner {
-    max-width: 36rem;
-  }
-
-  .hero-name {
-    font-size: clamp(2rem, 6vw, 3.5rem);
-    font-weight: 700;
-    letter-spacing: -0.04em;
-    margin-bottom: var(--spacing-md);
-  }
-
-  .hero-tagline {
-    font-size: 1.125rem;
-    font-weight: 500;
-    margin-bottom: var(--spacing-md);
-  }
-
-  .hero-desc {
-    font-size: 1rem;
-    color: var(--color-muted);
-    line-height: 1.8;
-  }
-
-  .section {
-    padding-top: var(--spacing-2xl);
-    padding-bottom: var(--spacing-2xl);
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .section-header {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    margin-bottom: var(--spacing-lg);
-  }
-
-  .section-title {
-    font-size: 0.875rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-muted);
-  }
-
-  .section-more {
-    font-size: 0.875rem;
-    color: var(--color-muted);
-    transition: color var(--transition);
-  }
-
-  .section-more:hover {
-    color: var(--color-fg);
-  }
-
-  .essay-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .essay-item {
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .essay-item:first-child {
-    border-top: 1px solid var(--color-border);
-  }
-
-  .essay-link {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--spacing-md);
-    padding: var(--spacing-md) 0;
-    transition: color var(--transition);
-  }
-
-  .essay-link:hover .essay-title {
-    color: var(--color-accent);
-  }
-
-  .essay-title {
-    font-size: 1rem;
-    font-weight: 500;
-    transition: color var(--transition);
-  }
-
-  .essay-date {
-    font-size: 0.8125rem;
-    color: var(--color-muted);
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  .gallery-preview {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--spacing-sm);
-  }
-
-  .gallery-thumb {
-    aspect-ratio: 4/3;
-    overflow: hidden;
-    border-radius: var(--radius-md);
-    background: var(--color-code-bg);
-  }
-
-  .gallery-thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 300ms ease;
-  }
-
-  .gallery-thumb:hover img {
-    transform: scale(1.03);
-  }
-
-  @media (max-width: 640px) {
-    .gallery-preview {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  .tech-cta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--spacing-md);
-    padding: var(--spacing-lg);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    transition: border-color var(--transition);
-  }
-
-  .tech-cta:hover {
-    border-color: var(--color-accent);
-  }
-
-  .tech-cta-title {
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: var(--spacing-xs);
-  }
-
-  .tech-cta-desc {
-    font-size: 0.875rem;
-    color: var(--color-muted);
-    line-height: 1.5;
-  }
-
-  .tech-cta-link {
-    font-size: 0.875rem;
-    color: var(--color-accent);
-    border: 1px solid var(--color-accent);
-    padding: 0.375rem 0.875rem;
-    border-radius: var(--radius-sm);
-    white-space: nowrap;
-    flex-shrink: 0;
-    transition: all var(--transition);
-  }
-
-  .tech-cta-link:hover {
-    background: var(--color-accent);
-    color: #fff;
-  }
-
-  @media (max-width: 640px) {
-    .tech-cta {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  }
-</style>
